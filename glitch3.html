@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="stylesheet" href="Skeleton-2.0.4/css/skeleton.css">
+  <title>Hello, world!</title>
+  <script src="html2canvas.min.js"></script>
+
+  <style>
+    canvas {
+      background-color: transparent;
+      background: transparent;
+    }
+
+    #canvas2 {
+      overflow: hidden;
+      z-index: -100;
+    }
+
+    #canvas_wrap {
+      background-color: transparent;
+      overflow: hidden;
+      z-index: -100;
+      position: absolute;
+      height: 600px;
+      padding: 0;
+      margin: 0;
+      left: 0;
+      top: 0;
+    }
+
+    .columns {
+      /* height: 600px; */
+      overflow: scroll;
+    }
+
+    #target {
+      background-color: transparent;
+    }
+
+    body {
+      background-color: #f5f5f5;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="row">
+    <div class="six columns">
+      <div id="target">
+        <h1>Heading</h1>
+        <h2>Heading</h2>
+        <h3>Heading</h3>
+        <h4>Heading</h4>
+        <h5>Heading</h5>
+        <h6>Heading</h6>
+
+        <p>The base type is 15px over 1.6 line height (24px)</p>
+
+        <strong>Bolded</strong>
+        <em>Italicized</em>
+        <a>Colored</a>
+        <u>Underlined</u>
+
+        <a class="button button-primary" href="#">Anchor button</a>
+        <button class="button-primary">Button element</button>
+
+        <form>
+          <label for="exampleEmailInput">Your email</label>
+          <input class="u-full-width" type="email" placeholder="test@mailbox.com" id="exampleEmailInput">
+
+          <label for="exampleRecipientInput">Reason for contacting</label>
+          <select class="u-full-width" id="exampleRecipientInput">
+            <option value="Option 1">Questions</option>
+            <option value="Option 2">Admiration</option>
+            <option value="Option 3">Can I get your number?</option>
+          </select>
+
+          <label for="exampleMessage">Message</label>
+          <textarea class="u-full-width" placeholder="Hi Dave …" id="exampleMessage"></textarea>
+          <label class="example-send-yourself-copy">
+            <input type="checkbox">
+            <span class="label-body">Send a copy to yourself</span>
+          </label>
+          <input class="button-primary" type="submit" value="Submit">
+        </form>
+
+      </div>
+    </div>
+    <div class="six columns">
+      <div class="control">
+        <button onclick="_0()">reset</button>
+        <button onclick="a()">toggle-clear</button>
+        <button onclick="fade()">toggle-fade</button>
+        <button onclick="b()">clip</button>
+        <button onclick="c()">toggle-show-target</button>
+        <button onclick="d()">toggle-wiggle</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- <script src="./5.js"></script> -->
+  <script type="text/javascript">let canvas = document.getElementById('canvas');
+  let html2canvasConfig = {
+    allowTaint: false,
+    backgroundColor: null,
+    canvas: null,
+    foreignObjectRendering: false,
+    imageTimeout: 15000,
+    ignoreElements: function(element) {
+      return false;
+    },
+    logging: true,
+    onclone: null,
+    proxy: null,
+    removeContainer: true,
+    scale: 3, //window.devicePixelRatio || 1,
+    useCors: false,
+    // width: Element.width,
+    // height: Element.height,
+    // x: Element.x,
+    // y: Element.y,
+    // scrollX: Element.scrollX,
+    // scrollY: Element.scrollY,
+    windowWidth: window.innerWidth,
+    windowHeight: window.innerHeight
+  };
+
+html2canvas(document.body, html2canvasConfig).then(function(canvas) {
+    document.body.appendChild(canvas);
+});
+  </script>
+
+</body>
+
+</html>

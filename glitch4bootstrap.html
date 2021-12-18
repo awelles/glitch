@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <!-- <link rel="stylesheet" href="Skeleton-2.0.4/css/skeleton.css"> -->
+  <link rel="stylesheet" href="bootstrap.min.css">
+
+  <title>Hello, world!</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.9.0/html-to-image.js"></script>
+
+  <style>
+    canvas {
+      background-color: transparent;
+      background: transparent;
+    }
+
+    #canvas2 {
+      overflow: hidden;
+      z-index: 100;
+      /* left: -100%;
+      top: -100%; */
+      /* scale: 0.5; */
+    }
+
+    #canvas_wrap {
+      background-color: transparent;
+      overflow: hidden;
+      z-index: -100;
+      position: absolute;
+      /* height: 600px; */
+      padding: 0;
+      margin: 0;
+    }
+
+    .container {
+      /* height: 600px; */
+      overflow: scroll;
+    }
+
+    #target {
+      background-color: transparent;
+    }
+
+    body {
+      background-color: #f5f5f5;
+    }
+    
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div id="target">
+      <h2>Nesting Button Groups</h2>
+      <p>Nest button groups to create drop down menus:</p>
+      <div class="btn-group">
+        <button type="button" class="btn btn-primary">Apple</button>
+        <button type="button" class="btn btn-primary">Samsung</button>
+        <div class="btn-group">
+          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+          Sony <span class="caret"></span></button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Tablet</a></li>
+            <li><a href="#">Smartphone</a></li>
+          </ul>
+        </div>
+      </div>      
+      <h2>Basic List Group</h2>
+      <ul class="list-group">
+        <li class="list-group-item">First item</li>
+        <li class="list-group-item">Second item</li>
+        <li class="list-group-item">Third item</li>
+      </ul>
+      <h2>Button Styles</h2>
+      <button type="button" class="btn">Basic</button>
+      <button type="button" class="btn btn-default">Default</button>
+      <button type="button" class="btn btn-primary">Primary</button>
+      <button type="button" class="btn btn-success">Success</button>
+      <button type="button" class="btn btn-info">Info</button>
+      <button type="button" class="btn btn-warning">Warning</button>
+      <button type="button" class="btn btn-danger">Danger</button>
+      <button type="button" class="btn btn-link">Link</button>   
+    <h2>Basic Table</h2>
+    <p>The .table class adds basic styling (light padding and only horizontal dividers) to a table:</p>            
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Firstname</th>
+          <th>Lastname</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>John</td>
+          <td>Doe</td>
+          <td>john@example.com</td>
+        </tr>
+        <tr>
+          <td>Mary</td>
+          <td>Moe</td>
+          <td>mary@example.com</td>
+        </tr>
+        <tr>
+          <td>July</td>
+          <td>Dooley</td>
+          <td>july@example.com</td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>Vertical (basic) form</h2>
+  <form action="/action_page.php">
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+    </div>
+    <div class="form-group">
+      <label for="pwd">Password:</label>
+      <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox" name="remember"> Remember me</label>
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+
+
+  
+  </div>
+</div>
+
+  <!-- ---------------------- -->
+  <div class="control">
+    <button onclick="_0()">reset</button>
+    <button onclick="a()">toggle-clear</button>
+    <button onclick="fade()">toggle-fade</button>
+    <button onclick="b()">clip</button>
+    <button onclick="c()">toggle-show-target</button>
+    <button onclick="d()">toggle-wiggle</button>
+  </div>
+
+  <!-- <script src="./5.js"></script> -->
+  <script type="text/javascript">let canvas = document.getElementById('canvas');
+  let img;
+
+  let elem, canvas2, ctx2, canvas3, ctx3;
+    let pixel_density = window.devicePixelRatio;
+    let runTime = Date.now();
+
+    let config = {
+      clear: true,
+      get_clip0: () => {
+        let p = new Path2D();
+        p.rect(0, 0, canvas2.width, canvas2.height);
+        return p;
+      },
+      get_clip1: () => {
+        let p = new Path2D();
+        p.rect(canvas2.width / 2, 0, canvas2.width, canvas2.height);
+        return p;
+      },
+      wiggle: true,
+      fade: true
+
+    }
+
+    function _0() {
+      config.clear = true;
+      ctx2.clip(config.get_clip0());
+      config.wiggle = false;
+      config.fade = true;
+      ctx2.restore();
+      ctx2.save();
+    }
+    function a() {
+      config.clear = !config.clear;
+    }
+    function fade() {
+      config.fade = !config.fade;
+    }
+    function b() {
+      ctx2.clip(config.get_clip1());
+
+    }
+    function c() {
+      target.style.opacity = target.style.opacity == "1" ? "0" : "1";
+    }
+    function d() {
+      config.wiggle = !config.wiggle;
+    }
+
+
+  window.onload = main;
+
+  function main() {
+    elem = document.getElementById('target');
+
+  htmlToImage.toPng(elem)
+  .then(function (dataUrl) {
+    let i = new Image();
+    i.src = dataUrl;
+    i.onload = function() {
+      img = i;
+      draw();
+    };
+  })
+  .catch(function (error) {
+    console.error('oops, something went wrong!', error);
+  });
+}
+function draw() {
+    wrapped = document.createElement('div');
+    wrapped.id = "canvas_wrap";
+    canvas2 = document.createElement('canvas');
+    canvas2.id = "canvas2";
+    canvas2.width = img.width;
+    canvas2.height = img.height;
+    canvas2.style.width = img.width / 2 + "px";
+    canvas2.style.height = img.height / 2 + "px";
+    ctx2 = canvas2.getContext('2d');
+    ctx2.drawImage(img, 0, 0);
+    wrapped.appendChild(canvas2);
+    
+    elem.parentElement.prepend(wrapped);
+    elem.style.opacity = 0;
+    
+    b();
+    
+    render();
+
+
+}
+
+function render() {
+
+if (config.clear) {
+  ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+}
+if (config.fade) {
+  ctx2.fillStyle = "#f5f5f521";
+  ctx2.fillRect(0, 0, canvas2.width, canvas2.height);
+
+}
+
+// let elem_boundingClientRect = elem.getClientRects()[ 0 ];
+let x = elem.parentElement.scrollLeft;
+let y = elem.parentElement.scrollTop;
+
+
+if (config.wiggle) {
+  x += Math.random() * 2;
+  y += Math.random() * 2;
+}
+
+ctx2.drawImage(img, -pixel_density * x, -pixel_density * y);
+
+requestAnimationFrame(render);
+}
+
+  </script>
+
+</body>
+
+</html>
