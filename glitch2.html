@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="stylesheet" href="Skeleton-2.0.4/css/skeleton.css">
+  <title>Hello, world!</title>
+  <script src="html2canvas.min.js"></script>
+  <style>
+    canvas {
+      background-color: transparent;
+      background: transparent;
+    }
+
+    #canvas2 {
+      overflow: hidden;
+      z-index: -100;
+    }
+
+    #canvas_wrap {
+      background-color: transparent;
+      overflow: hidden;
+      z-index: -100;
+      position: absolute;
+      height: 600px;
+      padding: 0;
+      margin: 0;
+      left: 0;
+      top: 0;
+    }
+
+    .columns {
+      height: 600px;
+      overflow: scroll;
+    }
+
+    #target {
+      background-color: transparent;
+    }
+
+    body {
+      background-color: #f5f5f5;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="row">
+    <div class="six columns">
+      <div id="target">
+        <h1>Heading</h1>
+        <h2>Heading</h2>
+        <h3>Heading</h3>
+        <h4>Heading</h4>
+        <h5>Heading</h5>
+        <h6>Heading</h6>
+
+        <p>The base type is 15px over 1.6 line height (24px)</p>
+
+        <strong>Bolded</strong>
+        <em>Italicized</em>
+        <a>Colored</a>
+        <u>Underlined</u>
+
+        <a class="button button-primary" href="#">Anchor button</a>
+        <button class="button-primary">Button element</button>
+
+        <form>
+          <label for="exampleEmailInput">Your email</label>
+          <input class="u-full-width" type="email" placeholder="test@mailbox.com" id="exampleEmailInput">
+
+          <label for="exampleRecipientInput">Reason for contacting</label>
+          <select class="u-full-width" id="exampleRecipientInput">
+            <option value="Option 1">Questions</option>
+            <option value="Option 2">Admiration</option>
+            <option value="Option 3">Can I get your number?</option>
+          </select>
+
+          <label for="exampleMessage">Message</label>
+          <textarea class="u-full-width" placeholder="Hi Dave …" id="exampleMessage"></textarea>
+          <label class="example-send-yourself-copy">
+            <input type="checkbox">
+            <span class="label-body">Send a copy to yourself</span>
+          </label>
+          <input class="button-primary" type="submit" value="Submit">
+        </form>
+
+      </div>
+    </div>
+    <div class="six columns">
+      <div class="control">
+        <button onclick="_0()">reset</button>
+        <button onclick="a()">toggle-clear</button>
+        <button onclick="fade()">toggle-fade</button>
+        <button onclick="b()">clip</button>
+        <button onclick="c()">toggle-show-target</button>
+        <button onclick="d()">toggle-wiggle</button>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- <script src="./5.js"></script> -->
+  <script type="text/javascript">
+
+    let elem, canvas2, ctx2, canvas3, ctx3;
+    let pixel_density = window.devicePixelRatio;
+    let runTime = Date.now();
+
+    let config = {
+      clear: false,
+      get_clip0: () => {
+        let p = new Path2D();
+        p.rect(0, 0, canvas2.width, canvas2.height);
+        return p;
+      },
+      get_clip1: () => {
+        let p = new Path2D();
+        p.rect(canvas2.width / 2, 0, canvas2.width, canvas2.height);
+        return p;
+      },
+      wiggle: false,
+      fade: true
+
+    }
+
+    function _0() {
+      config.clear = false;
+      ctx2.clip(config.get_clip0());
+      config.wiggle = false;
+      config.fade = true;
+      ctx2.restore();
+      ctx2.save();
+    }
+    function a() {
+      config.clear = !config.clear;
+    }
+    function fade() {
+      config.fade = !config.fade;
+    }
+    function b() {
+      ctx2.clip(config.get_clip1());
+
+    }
+    function c() {
+      target.style.opacity = target.style.opacity == "1" ? "0" : "1";
+    }
+    function d() {
+      config.wiggle = !config.wiggle;
+    }
+
+    window.onload = function () {
+
+      elem = document.getElementById('target');
+
+      html2canvas(elem, { backgroundColor: null }).then(
+        function (canvas) {
+          window.canvas = canvas;
+          target_elem = elem;
+
+
+          canvas.id = "canvas";
+
+          canvas2 = canvas.cloneNode();
+          canvas2.id = "canvas2";
+          ctx2 = canvas2.getContext('2d');
+          canvas2.width = canvas.width;
+          document.body.appendChild(canvas2);
+
+          let canvas_wrap = document.createElement('div');
+          canvas_wrap.id = "canvas_wrap";
+          canvas_wrap.appendChild(canvas2);
+
+          let top = elem.getBoundingClientRect().top;
+          let left = elem.getBoundingClientRect().left;
+
+          canvas.style.top = top + 'px';
+          canvas.style.left = left + 'px';
+
+          elem.parentElement.prepend(canvas_wrap);
+          target.style.opacity = 0;
+          ctx2.save();
+
+          requestAnimationFrame(render);
+
+        });
+
+    }
+
+    function render() {
+
+      if (config.clear) {
+        ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+      }
+      if (config.fade) {
+        ctx2.fillStyle = "#f5f5f521";
+        ctx2.fillRect(0, 0, canvas2.width, canvas2.height);
+
+      }
+
+      let elem_boundingClientRect = elem.getClientRects()[ 0 ];
+      let x = elem_boundingClientRect.left;
+      let y = elem_boundingClientRect.top;
+
+      if (config.wiggle) {
+        x += Math.random() * 2;
+        y += Math.random() * 2;
+      }
+
+      ctx2.drawImage(canvas, pixel_density * x, pixel_density * y);
+
+      requestAnimationFrame(render);
+    }
+
+  </script>
+
+</body>
+
+</html>
